@@ -1,0 +1,49 @@
+@model Wrapper
+
+<div class="container">
+    <div class="banner">
+        <h1 style="display: inline-block">Welcome to the Wedding Planner</h1>
+        <a href="/logout"><h3 style="display: inline-block; margin-left: 380px;">Log Out</h3></a>
+    </div>
+    <div class="table" style="margin-top: 50px;">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Wedding</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Guests</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var wedding in Model.AllWeddings){
+                <tr>
+                    <td><h4><a href="/display/@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a></h4></td>
+                    <td><h4>@wedding.Date.ToString("h:mm tt on MMM dd, yyyy")</h4></td>
+                    <td><h4>@wedding.Attendees.Count()</h4></td>
+                    <td>
+                        @{
+                            if(wedding.PlannerId == ViewBag.UserId)
+                            {
+                                <a href="/delete/@wedding.WeddingId"><h4>Delete</h4></a>
+                            } else {
+                                IEnumerable<int> yes = wedding.Attendees.Select(att=>att.AttendeeId);
+                                @if(yes.Contains((int)ViewBag.UserId)){
+                                    <a href="/unrsvp/@wedding.WeddingId"><h4>UN-RSVP</h4></a>
+                                } else {
+                                    <a href="/rsvp/@wedding.WeddingId"><h4>RSVP</h4></a>
+                                }
+                            }
+                        }
+                    <h4>
+
+                    </h4></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="button">
+        <a href="/new"><button class="btn btn-primary" style="margin-left: 950px;">New Wedding</button></a>
+    </div>
+</div>

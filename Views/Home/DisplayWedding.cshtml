@@ -1,0 +1,29 @@
+@model Wedding
+<div class="container">
+    <div class="banner">
+        <h1 style="display: inline-block">@ViewBag.ThisWedding.WedderOne and @ViewBag.ThisWedding.WedderTwo's Wedding</h1>
+        <a href="/dashboard"><h3 style="display: inline-block; margin-left: 200px;">Dashboard</h3></a>
+        <a href="/logout"><h3 style="display: inline-block; margin-left: 100px;">Log Out</h3></a>
+    </div>
+    <div class="date" style="margin-left: 50px; margin-top: 50px;">
+        <h3>Date: @Model.Date.ToString("MMMM dd, yyyy")</h3>
+    </div>
+    <div class="guests" style="margin-left: 50px; margin-top: 50px; display: inline-block; vertical-align: top;">
+        <h3>Guests:</h3>
+        <div class="list" style="margin-left: 50px; margin-top: 30px; display: inline-block; vertical-align: top; width: 300px;">
+            @foreach(var asc in Model.Attendees)
+            {
+                <h5>@asc.Attendee.FirstName @asc.Attendee.LastName</h5>
+            }
+            
+        </div>
+        
+    </div>
+    <div class="map" style="margin-left: 50px; margin-top: 50px; display: inline-block; vertical-align: top;">
+        <iframe
+            width="400" height="400" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=@ViewBag.apiKey
+                &q=@ViewBag.ThisWedding.Address" allowfullscreen>
+        </iframe>
+    </div>
+    
+</div>
